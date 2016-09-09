@@ -18,14 +18,13 @@ int corsairlink_find_device(struct corsair_device_info *dev)
 	libusb_set_debug(dev->context, 3);
 
 	dev->handle = libusb_open_device_with_vid_pid(dev->context, dev->vendor_id, dev->product_id);
-	// dev_handle = libusb_open_device_with_vid_pid(ctx, 0x1b1c, 0x0c09);
 	if(dev->handle == NULL) {
 		fprintf(stdout, "Cannot open device\n");
 	} else {
 		fprintf(stdout, "Device Opened\n");
 	}
 
-	//r = libusb_detach_kernel_driver(dev_handle, 0);
+	r = libusb_detach_kernel_driver(dev->handle, 0);
 	r = libusb_claim_interface(dev->handle, 0);
 
 	return 0;
@@ -65,6 +64,16 @@ int main(int argc, char *argv[])
 	commands[4] = 0x00;
 
 	r = dev->write(dev->handle, dev->write_endpoint, commands, 5);
+	if (r >= 0) {
+		fprintf(stdout, "Writing Successful!\n");
+		for (i=0;i<64;i++) {
+			fprintf(stdout, "%02X ", commands[i]);
+		}
+		fprintf(stdout, "\n");
+	} else {
+		fprintf(stdout, "Writing Error\n");
+	}
+
 	r = dev->read(dev->handle, dev->read_endpoint, response, 64);
 	if (r == 0) {
 		fprintf(stdout, "Reading Successful!\n");

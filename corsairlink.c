@@ -42,7 +42,8 @@ void corsairlink_close(struct corsair_device_info *dev)
 int main(int argc, char *argv[])
 {
 	struct corsair_device_info *dev;
-	unsigned char data[64];
+	unsigned char response[64];
+	unsigned char commands[64];
 	int i; // looping
 	int r; // result from libusb functions
 	
@@ -55,19 +56,20 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	memset(data, 0, sizeof(data));
-	data[0] = 0x03;
-	data[1] = 0x81; // CommandID
-	data[2] = 0x07; // ReadOneByte
-	data[3] = 0x00; // DeviceID
-	data[4] = 0x00;
+	memset(response, 0, sizeof(response));
+	memset(commands, 0, sizeof(commands));
+	commands[0] = 0x03;
+	commands[1] = 0x81; // CommandID
+	commands[2] = 0x07; // ReadOneByte
+	commands[3] = 0x00; // DeviceID
+	commands[4] = 0x00;
 
-	r = dev->write(dev->handle, dev->write_endpoint, data, 5);
-	r = dev->read(dev->handle, dev->read_endpoint, data, 5);
+	r = dev->write(dev->handle, dev->write_endpoint, commands, 5);
+	r = dev->read(dev->handle, dev->read_endpoint, response, 64);
 	if (r == 0) {
 		fprintf(stdout, "Reading Successful!\n");
-		for (i=0;i<8;i++) {
-			fprintf(stdout, "%02X ", data[i]);
+		for (i=0;i<64;i++) {
+			fprintf(stdout, "%02X ", response[i]);
 		}
 		fprintf(stdout, "\n");
 	} else {

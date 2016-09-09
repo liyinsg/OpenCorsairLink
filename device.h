@@ -3,7 +3,7 @@ struct corsair_device_info {
 	unsigned short vendor_id;
 	unsigned short product_id;
 	unsigned short device_id;
-	char *name[16];
+	char name[16];
 	/** device endpoints */
 	unsigned char read_endpoint;
 	unsigned char write_endpoint;
@@ -38,8 +38,21 @@ struct corsair_device_info {
 		.name = "H100i",
 		.read_endpoint = 0x01,
 		.write_endpoint = LIBUSB_REQUEST_TYPE_CLASS|LIBUSB_RECIPIENT_INTERFACE|LIBUSB_ENDPOINT_OUT,
+		.handle = NULL,
+		.context = NULL,
 		.read = corsairlink_hid_read,
 		.write = corsairlink_hid_write,
 	},
-	{}
+	{
+		.vendor_id = 0x1b1c,
+		.product_id = 0x0c09,
+		.device_id = 0x00,
+		.name = "H100i V2",
+		.read_endpoint = 0x02,
+		.write_endpoint = 0x02,
+		.handle = NULL,
+		.context = NULL,
+		.read = corsairlink_asetek_read,
+		.write = corsairlink_asetek_write,
+	}
 };

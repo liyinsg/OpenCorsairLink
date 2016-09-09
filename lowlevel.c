@@ -50,7 +50,7 @@ int corsairlink_hid_read(struct libusb_device_handle *dev_handle,
 	return r;
 }
 
-int corsairlink_bulk_write(struct libusb_device_handle *dev_handle,
+int corsairlink_asetek_write(struct libusb_device_handle *dev_handle,
 			unsigned char endpoint,
 			unsigned char *data,
 			int length)
@@ -58,16 +58,16 @@ int corsairlink_bulk_write(struct libusb_device_handle *dev_handle,
 	int bytes_transferred;
 	int r;
 	
-	r = libusb_bulk_transfer(dev_handle, endpoint, data, length, &bytes_transferred, 5000);
-	if (r == 0 && bytes_transferred == length) {
-		fprintf(stdout, "Writing Successful!\n");
-	} else {
-		fprintf(stdout, "Write Error\n");
-	}
+	r = libusb_bulk_transfer(dev_handle, endpoint, data, length, &bytes_transferred, TIMEOUT_DEFAULT);
+	//if (r == 0 && bytes_transferred == length) {
+	//	fprintf(stdout, "Writing Successful!\n");
+	//} else {
+	//	fprintf(stdout, "Write Error\n");
+	//}
 	return r;
 }
 
-int corsairlink_bulk_read(struct libusb_device_handle *dev_handle,
+int corsairlink_asetek_read(struct libusb_device_handle *dev_handle,
 			unsigned char endpoint,
 			unsigned char *data,
 			int length)
@@ -75,11 +75,11 @@ int corsairlink_bulk_read(struct libusb_device_handle *dev_handle,
 	int bytes_transferred;
 	int r;
 	
-	r = libusb_bulk_transfer(dev_handle, endpoint, data, length, &bytes_transferred, 5000);
-	if (r == 0 && bytes_transferred > 1) {
-		fprintf(stdout, "Reading Successful!\n");
-	} else {
-		fprintf(stdout, "Read Error\n");
-	}
+	r = libusb_bulk_transfer(dev_handle, endpoint, data, length, &bytes_transferred, TIMEOUT_DEFAULT);
+	//if (r == 0 && bytes_transferred > 1) {
+	//	fprintf(stdout, "Reading Successful!\n");
+	//} else {
+	//	fprintf(stdout, "Read Error\n");
+	//}
 	return r;
 }

@@ -19,9 +19,7 @@ int corsairlink_find_device(struct corsair_device_info *dev)
 
 	dev->handle = libusb_open_device_with_vid_pid(dev->context, dev->vendor_id, dev->product_id);
 	if(dev->handle == NULL) {
-		fprintf(stdout, "Cannot open device\n");
-	} else {
-		fprintf(stdout, "Device Opened\n");
+		return -1;
 	}
 
 	r = libusb_detach_kernel_driver(dev->handle, 0);
@@ -50,7 +48,7 @@ int main(int argc, char *argv[])
 		dev = &corsairlink_devices[i];
 		r = corsairlink_find_device(dev);
 		if (r >= 0) {
-			fprintf(stdout, "CorsairLink Device Found: !\n");
+			fprintf(stdout, "CorsairLink Device Found: %s!\n", dev->name);
 			break;
 		}
 	}

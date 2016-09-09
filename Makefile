@@ -12,3 +12,6 @@ all: corsairlink4.elf
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm *.elf

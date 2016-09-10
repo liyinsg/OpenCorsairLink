@@ -14,22 +14,10 @@ struct corsair_device_info {
 	int interface;
 
 	/** device communication helper functions */
-	// int (*read)(struct libusb_device_handle *dev_handle,
-	// 	unsigned char endpoint,
-	// 	unsigned char *data,
-	// 	int length,
-	// 	//int* transferred,
-	// 	//unsigned int timeout
-	// )
+	int (*init)(struct libusb_device_handle*, unsigned char);
+	int (*deinit)(struct libusb_device_handle*, unsigned char);
 	int (*read)(struct libusb_device_handle*, unsigned char, unsigned char*, int);
 	int (*write)(struct libusb_device_handle*, unsigned char, unsigned char*, int);
-	// int (*write)(struct libusb_device_handle *dev_handle,
-	// 	unsigned char endpoint,
-	// 	unsigned char *data,
-	// 	int length,
-	// 	//int* transferred,
-	// 	//unsigned int timeout
-	// )
 } corsairlink_devices[] = {
 	{
 		.vendor_id = 0x1b1c,
@@ -40,6 +28,8 @@ struct corsair_device_info {
 		.write_endpoint = LIBUSB_REQUEST_TYPE_CLASS|LIBUSB_RECIPIENT_INTERFACE|LIBUSB_ENDPOINT_OUT,
 		.handle = NULL,
 		.context = NULL,
+		.init = corsairlink_hid_init,
+		.deinit = corsairlink_hid_deinit,
 		.read = corsairlink_hid_read,
 		.write = corsairlink_hid_write,
 	},
@@ -52,6 +42,8 @@ struct corsair_device_info {
 		.write_endpoint = 0x02|LIBUSB_ENDPOINT_OUT,
 		.handle = NULL,
 		.context = NULL,
+		.init = corsairlink_asetek_init,
+		.deinit = corsairlink_asetek_deinit,
 		.read = corsairlink_asetek_read,
 		.write = corsairlink_asetek_write,
 	}

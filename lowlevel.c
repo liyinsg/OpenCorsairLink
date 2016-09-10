@@ -10,6 +10,18 @@
 #define TIMEOUT_DEFAULT 1000
 #define INTERFACE_NUMBER 0
 
+int corsairlink_hid_init(struct libusb_device_handle *dev_handle,
+			unsigned char endpoint)
+{
+	return 0;
+}
+
+int corsairlink_hid_deinit(struct libusb_device_handle *dev_handle,
+			unsigned char endpoint)
+{
+	return 0;
+}
+
 int corsairlink_hid_write(struct libusb_device_handle *dev_handle,
  			unsigned char endpoint,
 			unsigned char *data,
@@ -18,7 +30,8 @@ int corsairlink_hid_write(struct libusb_device_handle *dev_handle,
 	int bytes_transferred;
 	int r;
 	
-	r = libusb_control_transfer(dev_handle, 				LIBUSB_REQUEST_TYPE_CLASS|LIBUSB_RECIPIENT_INTERFACE|LIBUSB_ENDPOINT_OUT,
+	r = libusb_control_transfer(dev_handle,
+ 				LIBUSB_REQUEST_TYPE_CLASS|LIBUSB_RECIPIENT_INTERFACE|LIBUSB_ENDPOINT_OUT,
 				HID_SET_REPORT, /** HID Set_Report */
 				(HID_REPORT_TYPE_FEATURE<<8)|data[0],
 				INTERFACE_NUMBER,
@@ -38,7 +51,8 @@ int corsairlink_hid_read(struct libusb_device_handle *dev_handle,
 	int bytes_transferred;
 	int r;
 	
-	r = libusb_control_transfer(dev_handle, 				LIBUSB_REQUEST_TYPE_CLASS|LIBUSB_RECIPIENT_INTERFACE|LIBUSB_ENDPOINT_IN,
+	r = libusb_control_transfer(dev_handle,
+				LIBUSB_REQUEST_TYPE_CLASS|LIBUSB_RECIPIENT_INTERFACE|LIBUSB_ENDPOINT_IN,
 				HID_GET_REPORT, /** HID Set_Report */
 				(HID_REPORT_TYPE_FEATURE<<8)|data[0],
 				INTERFACE_NUMBER,
@@ -47,6 +61,29 @@ int corsairlink_hid_read(struct libusb_device_handle *dev_handle,
 	// 			INTERRUPT_IN_ENDPOINT,
 	// 			data, length,
 	// 			&bytes_transferred, TIMEOUT_DEFAULT);
+	return r;
+}
+
+int corsairlink_asetek_init(struct libusb_device_handle *dev_handle,
+			unsigned char endpoint)
+{
+	int r;
+	r = libusb_control_transfer(dev_handle,
+				LIBUSB_REQUEST_TYPE_VENDOR|LIBUSB_RECIPIENT_DEVICE|LIBUSB_ENDPOINT_OUT,
+				0x00, 0xffff, 0x0000, "", 0, 0);
+	r = libusb_control_transfer(dev_handle,
+				LIBUSB_REQUEST_TYPE_VENDOR|LIBUSB_RECIPIENT_DEVICE|LIBUSB_ENDPOINT_OUT,
+				0x02, 0x0002, 0x0000, "", 0, 0);
+	return r;
+}
+
+int corsairlink_asetek_deinit(struct libusb_device_handle *dev_handle,
+			unsigned char endpoint)
+{
+	int r;
+	r = libusb_control_transfer(dev_handle,
+				LIBUSB_REQUEST_TYPE_VENDOR|LIBUSB_RECIPIENT_DEVICE|LIBUSB_ENDPOINT_OUT,
+				0x02, 0x0004, 0x0000, "", 0, 0);
 	return r;
 }
 

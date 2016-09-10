@@ -21,8 +21,8 @@ struct corsair_device_info {
 	// 	//int* transferred,
 	// 	//unsigned int timeout
 	// )
-	int (*read)();
-	int (*write)();
+	int (*read)(struct libusb_device_handle*, unsigned char, unsigned char*, int);
+	int (*write)(struct libusb_device_handle*, unsigned char, unsigned char*, int);
 	// int (*write)(struct libusb_device_handle *dev_handle,
 	// 	unsigned char endpoint,
 	// 	unsigned char *data,
@@ -48,8 +48,8 @@ struct corsair_device_info {
 		.product_id = 0x0c09,
 		.device_id = 0x00,
 		.name = "H100i V2",
-		.read_endpoint = 0x02,
-		.write_endpoint = 0x02,
+		.read_endpoint = 0x02|LIBUSB_ENDPOINT_IN,
+		.write_endpoint = 0x02|LIBUSB_ENDPOINT_OUT,
 		.handle = NULL,
 		.context = NULL,
 		.read = corsairlink_asetek_read,

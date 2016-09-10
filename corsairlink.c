@@ -7,6 +7,8 @@
 #include "lowlevel.h"
 #include "device.h"
 
+extern struct corsair_device_info corsairlink_devices[2];
+
 int corsairlink_find_device(struct corsair_device_info *dev)
 {
 	int r;
@@ -39,10 +41,8 @@ void corsairlink_close(struct corsair_device_info *dev)
 int main(int argc, char *argv[])
 {
 	struct corsair_device_info *dev;
-	unsigned char response[32];
-	unsigned char commands[20];
-	int i; // looping
 	int r; // result from libusb functions
+	int i; // for loops
 	
 	for (i=0; i<2; i++) {
 		dev = &corsairlink_devices[i];
@@ -52,37 +52,16 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
+
+	//r = dev->init(dev->handle, dev->write_endpoint);
+
+	corsairlink_asetek_change_led(dev, 0x00, 0x00, 0xff);
+	sleep(2);
+	corsairlink_asetek_change_led(dev, 0x00, 0xff, 0x00);
+	sleep(2);
+	corsairlink_asetek_change_led(dev, 0xff, 0x00, 0x00);
 	
-	memset(response, 0, sizeof(response));
-	memset(commands, 0, sizeof(commands));
-	commands[0] = 0x20;
-	commands[1] = 0x00; // CommandID
-	commands[2] = 0x00; // ReadOneByte
-	commands[3] = 0x00; // DeviceID
-	r = dev->init(dev->handle, dev->write_endpoint);
-	r = dev->write(dev->handle, dev->write_endpoint, commands, 1);
-	if (r >= 0) {
-		fprintf(stdout, "Writing Successful!\n");
-		for (i=0;i<20;i++) {
-			fprintf(stdout, "%02X ", commands[i]);
-		}
-		fprintf(stdout, "\n");
-	} else {
-		fprintf(stdout, "Writing Error\n");
-	}
-
-	r = dev->read(dev->handle, dev->read_endpoint, response, 32);
-	if (r == 0) {
-		fprintf(stdout, "Reading Successful!\n");
-		for (i=0;i<32;i++) {
-			fprintf(stdout, "%02X ", response[i]);
-		}
-		fprintf(stdout, "\n");
-	} else {
-		fprintf(stdout, "Read Error\n");
-
-	}
-	r = dev->deinit(dev->handle, dev->write_endpoint);
+	//r = dev->deinit(dev->handle, dev->write_endpoint);
 
 exit:
 	corsairlink_close(dev);

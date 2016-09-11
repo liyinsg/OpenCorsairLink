@@ -1,5 +1,6 @@
 #include <libusb.h>
-#include "lowlevel.h"
+#include "lowlevel_asetek.h"
+#include "lowlevel_hid.h"
 #include "device.h"
 
 struct corsair_device_info corsairlink_devices[] = {

@@ -4,13 +4,13 @@
 #include <unistd.h>
 #include <string.h>
 #include <libusb.h>
-#include "lowlevel.h"
+#include "lowlevel_asetek.h"
 #include "device.h"
 
 int corsairlink_asetek_change_led(struct corsair_device_info *dev,
-			uint8_t Led_Red, uint8_t Led_Green, uint8_t Led_Blue,
-			uint8_t Warning_Red, uint8_t Warning_Green, uint8_t Warning_Blue,
-			uint8_t Warning_Temp, uint8_t Warning_Enable)
+			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
+			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
+			unsigned char Warning_Temp, unsigned char Warning_Enable)
 {
 	int r;
 	unsigned char response[64];
@@ -45,10 +45,10 @@ int corsairlink_asetek_change_led(struct corsair_device_info *dev,
 }
 
 int corsairlink_asetek_fan_curve(struct corsair_device_info *dev,
-			uint8_t temp1, uint8_t temp2, uint8_t temp3,
-			uint8_t temp4, uint8_t temp5, uint8_t temp6
-			uint8_t speed1, uint8_t speed2, uint8_t speed3,
-			uint8_t speed4, uint8_t speed5, uint8_t speed6)
+			unsigned char temp1, unsigned char temp2, unsigned char temp3,
+			unsigned char temp4, unsigned char temp5, unsigned char temp6,
+			unsigned char speed1, unsigned char speed2, unsigned char speed3,
+			unsigned char speed4, unsigned char speed5, unsigned char speed6)
 {
 	int r;
 	unsigned char response[64];

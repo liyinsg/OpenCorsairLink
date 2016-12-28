@@ -41,5 +41,9 @@ int corsairlink_asetek_change_led(struct corsair_device_info *dev,
 	r = dev->write(dev->handle, dev->write_endpoint, commands, 19);
 	r = dev->read(dev->handle, dev->read_endpoint, response, 32);
 
+	// fan_rpm = (long int) response[0]*16*16 + response[1];
+	// pump_rpm = (response[8]*16*16)+response[9];
+	// liquid_temp = (double) response[10] + (double) response[14]/10;
+
 	return r;
 }

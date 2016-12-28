@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <libusb.h>
-#include "lowlevel/asetek4.h"
-#include "device.h"
+#include "../../lowlevel/asetek4.h"
+#include "../../device.h"
 
 int corsairlink_asetek_fan_curve(struct corsair_device_info *dev,
 			unsigned char temp1, unsigned char temp2, unsigned char temp3,

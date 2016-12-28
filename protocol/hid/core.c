@@ -21,18 +21,16 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "Proto.h"
-#include "Link.h"
-#include "Fan.h"
+#include "core.h"
 
 
-CorsairLink::CorsairLink() {
+CorsairLink() {
 	handle = NULL;
 	CommandId = 0x81;
 	max_ms_read_wait = 5000;
 }
 
-int CorsairLink::Initialize()
+int Initialize()
 {
 	if(handle == NULL)
 	{
@@ -69,7 +67,7 @@ int CorsairLink::Initialize()
 	return 1;
 }
 
-int CorsairLink::GetDeviceId(void)
+int GetDeviceId(void)
 {
 	memset(buf,0,sizeof(buf));
 
@@ -93,7 +91,7 @@ int CorsairLink::GetDeviceId(void)
 	return buf[2];
 }
 
-int CorsairLink::GetFirmwareVersion()
+int GetFirmwareVersion()
 {
 	memset(buf,0,sizeof(buf));
 
@@ -118,7 +116,7 @@ int CorsairLink::GetFirmwareVersion()
 	return firmware;
 }
 
-int CorsairLink::GetProductName(char *ostring)
+int GetProductName(char *ostring)
 {
 	memset(buf,0,sizeof(buf));
 
@@ -142,7 +140,7 @@ int CorsairLink::GetProductName(char *ostring)
 	return 0;
 }
 
-int CorsairLink::GetDeviceStatus()
+int GetDeviceStatus()
 {
 	memset(buf,0,sizeof(buf));
 
@@ -165,7 +163,7 @@ int CorsairLink::GetDeviceStatus()
 	return buf[2];
 }
 
-char* CorsairLink::_GetManufacturer()
+char* _GetManufacturer()
 {
 	char *str;
 	char wstr[MAX_STR];
@@ -179,7 +177,7 @@ char* CorsairLink::_GetManufacturer()
 	return str;
 }
 
-char* CorsairLink::_GetProduct()
+char* _GetProduct()
 {
 	char* str;
 	char wstr[MAX_STR];
@@ -193,7 +191,7 @@ char* CorsairLink::_GetProduct()
 	return str;
 }
 
-int CorsairLink::hid_read_wrapper (hid_device *handle, unsigned char *buf)
+int hid_read_wrapper (hid_device *handle, unsigned char *buf)
 {
 	// Read requested state. hid_read() has been set to be
 	// non-blocking by the call to hid_set_nonblocking() above.
@@ -224,7 +222,7 @@ int CorsairLink::hid_read_wrapper (hid_device *handle, unsigned char *buf)
 	return 1;
 }
 
-int CorsairLink::hid_wrapper (hid_device *handle, unsigned char *buf, size_t buf_size) {
+int hid_wrapper (hid_device *handle, unsigned char *buf, size_t buf_size) {
 	int res = hid_write(handle, buf, buf_size);
 	if (res < 0) {
 		fprintf(stderr, "Error: Unable to write() %s\n", (char*)hid_error(handle) );
@@ -238,7 +236,7 @@ int CorsairLink::hid_wrapper (hid_device *handle, unsigned char *buf, size_t buf
 	return res;	
 }
 
-void CorsairLink::sleep(int ms)
+void sleep(int ms)
 {
 	#ifdef WIN32
 	Sleep(ms);
@@ -247,7 +245,7 @@ void CorsairLink::sleep(int ms)
 	#endif
 }
 
-void CorsairLink::Close()
+void Close()
 {
 	if(handle != NULL)
 	{
@@ -257,7 +255,7 @@ void CorsairLink::Close()
 	}
 }
 
-CorsairLink::~CorsairLink()
+~CorsairLink()
 {
 	this->Close();
 //	if(fans != NULL) {

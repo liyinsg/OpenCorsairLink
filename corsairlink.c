@@ -55,20 +55,8 @@ int main(int argc, char *argv[])
 	}
 
 	r = dev->init(dev->handle, dev->write_endpoint);
-
-	//r = corsairlink_asetek_start_transaction(dev);
-	r = corsairlink_asetek_continue_transaction(dev);
 	r = corsairlink_asetek_fan_curve(dev, 20, 25, 29, 33, 37, 40, 30, 40, 50, 60, 70, 80);
-
-	r = corsairlink_asetek_continue_transaction(dev);
-	r = corsairlink_asetek_change_led(dev, 0xff, 0xff, 0x00, 0xff, 0x00, 0x00, 60, 1); 
-
-	r = corsairlink_asetek_continue_transaction(dev);
-	r = corsairlink_asetek_20(dev);
-
-	r = corsairlink_asetek_continue_transaction(dev);
-	r = corsairlink_asetek_22000000(dev);
-
+	r = corsairlink_asetek_change_led(dev, 0xff, 0xff, 0x00, 0xff, 0x00, 0x00, 60, 1);
 	r = dev->deinit(dev->handle, dev->write_endpoint);
 
 exit:

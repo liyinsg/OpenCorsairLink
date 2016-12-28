@@ -3,10 +3,11 @@
 
 struct corsair_device_info {
 	/** device info */
+	char name[16];
 	unsigned short vendor_id;
 	unsigned short product_id;
 	unsigned short device_id;
-	char name[16];
+
 	/** device endpoints */
 	unsigned char read_endpoint;
 	unsigned char write_endpoint;

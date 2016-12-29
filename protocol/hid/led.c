@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "core.h"
+
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
 			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
 			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
@@ -39,12 +41,12 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 	commands[i++] = LED_SelectCurrent; // Command data...
 	commands[i++] = 1;
 
-	commands[i++] = cl->CommandId++; // Command ID
+	commands[i++] = CommandId++; // Command ID
 	commands[i++] = WriteOneByte; // Command Opcode
 	commands[i++] = LED_Mode; // Command data...
 	commands[i++] = 0x00;
 
-	commands[i++] = cl->CommandId++; // Command ID
+	commands[i++] = CommandId++; // Command ID
 	commands[i++] = WriteThreeBytes; // Command Opcode
 	commands[i++] = LED_CycleColors; // Command data...
 	commands[i++] = 0x0C;

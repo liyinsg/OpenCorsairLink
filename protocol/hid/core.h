@@ -75,4 +75,9 @@ enum CorsairFanModes {
 	Custom = 0x0E
 };
 
+int corsairlink_hid_change_led(struct corsair_device_info *dev,
+			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
+			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
+			unsigned char Warning_Temp, unsigned char Warning_Enable);
+
 #endif

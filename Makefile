@@ -8,17 +8,17 @@ OBJS_LL = lowlevel/asetek4.o \
 OBJS_PROTO = protocol/asetek4/core.o \
 			protocol/asetek4/fan.o \
 			protocol/asetek4/led.o \
-			protocol/asetek4/pump.o
-			# protocol/hid/core.o \
-			# protocol/hid/fan.o \
-			# protocol/hid/led.o \
-			# protocol/hid/pump.o
+			protocol/asetek4/pump.o \
+			protocol/hid/core.o \
+			protocol/hid/fan.o \
+			protocol/hid/led.o \
+			protocol/hid/pump.o
 
 default: all
 
 all: corsairlink4.elf
 	
-corsairlink4.elf: $(OBJS) $(OBJS_PROTO) $(OBJS_LL)
+corsairlink4.elf: $(OBJS_PROTO) $(OBJS_LL) $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@ 
 
 %.o: %.c

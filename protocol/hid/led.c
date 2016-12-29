@@ -16,9 +16,12 @@
  * along with OpenCorsairLink.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+#include <libusb.h>
 
 #include "../../lowlevel/hid.h"
 #include "../../device.h"

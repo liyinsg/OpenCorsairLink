@@ -27,8 +27,6 @@
 #include "../../device.h"
 #include "core.h"
 
-static unsigned char CommandId = 0x81;
-
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
 			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
 			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
@@ -57,15 +55,23 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 	commands[i++] = WriteThreeBytes; // Command Opcode
 	commands[i++] = LED_CycleColors; // Command data...
 	commands[i++] = 0x0C;
+
 	commands[i++] = Led_Red;
 	commands[i++] = Led_Green;
 	commands[i++] = Led_Blue;
+
 	commands[i++] = Led_Red;
 	commands[i++] = Led_Green;
 	commands[i++] = Led_Blue;
+
 	commands[i++] = Led_Red;
 	commands[i++] = Led_Green;
 	commands[i++] = Led_Blue;
+
+	commands[i++] = Led_Red;
+	commands[i++] = Led_Green;
+	commands[i++] = Led_Blue;
+
 	commands[0] = i; // Length
 
 	r = dev->write(dev->handle, dev->write_endpoint, commands, i);

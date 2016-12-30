@@ -42,9 +42,7 @@ int corsairlink_hid_write(struct libusb_device_handle *dev_handle,
 				(HID_REPORT_TYPE_OUTPUT<<8)|0x00,
 				INTERFACE_NUMBER,
 				data, length, TIMEOUT_DEFAULT);
-	if (r == LIBUSB_ERROR_TIMEOUT) fprintf(stderr, "Error: Timeout\n");
-	if (r == LIBUSB_ERROR_PIPE) fprintf(stderr, "Error: Request not supported by Device\n");
-	if (r == LIBUSB_ERROR_NO_DEVICE) fprintf(stderr, "Error: Device Disconnected\n");
+
 	return r;
 }
 
@@ -57,11 +55,9 @@ int corsairlink_hid_read(struct libusb_device_handle *dev_handle,
 	int r;
 	
 	r = libusb_interrupt_transfer(dev_handle,
-				INTERRUPT_IN_ENDPOINT,
+				endpoint,
 				data, length,
 				&bytes_transferred, TIMEOUT_DEFAULT);
-	if (r == LIBUSB_ERROR_TIMEOUT) fprintf(stderr, "Error: Timeout\n");
-	if (r == LIBUSB_ERROR_PIPE) fprintf(stderr, "Error: Request not supported by Device\n");
-	if (r == LIBUSB_ERROR_NO_DEVICE) fprintf(stderr, "Error: Device Disconnected\n");
+
 	return r;
 }

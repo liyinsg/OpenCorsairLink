@@ -13,7 +13,26 @@
 // #define v4_extreme_mode_control		{0x11,0x00,0x14,0x19,0x1e,0x24,0x30,0x3c,0x32,0x32,0x4b,0x55,0x5d,0x64}; // 20,50 / 25,50 / 30,75 / 36,85 / 48.93, 60,100
 // #define v4_silent_mode_control		{0x11,0x00,0x14,0x20,0x28,0x32,0x37,0x3c,0x19,0x27,0x32,0x4b,0x5a,0x64}; // 20,25 / 32,39 / 40,50 / 50,75 / 55,90, 60,100
 
-int corsairlink_asetek_change_led(struct corsair_device_info *dev, unsigned char RR, unsigned char GG, unsigned char BB);
+enum Asetek_Commands {
+	ChangeLed = 0x10,
+	FanCurve = 0x11,
+	UnknownCmd = 0x12,
+	PumpMode = 0x13,
+};
+
+enum Asetek_FanCurve {
+	UnknownFanCurve = 0x00,
+};
+
+enum Asetek_PumpModes {
+	Quiet = 0x28,
+	Performance = 0x42,
+};
+
+int corsairlink_asetek_change_led(struct corsair_device_info *dev,
+			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
+			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
+			unsigned char Warning_Temp, unsigned char Warning_Enable);
 int corsairlink_asetek_22000000(struct corsair_device_info *dev);
 int corsairlink_asetek_14000000(struct corsair_device_info *dev);
 int corsairlink_asetek_20(struct corsair_device_info *dev);

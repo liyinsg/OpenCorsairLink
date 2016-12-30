@@ -66,8 +66,9 @@ int corsairlink_asetek_continue_transaction(struct corsair_device_info *dev)
 
 	r = libusb_control_transfer(dev->handle,
 				LIBUSB_REQUEST_TYPE_VENDOR|LIBUSB_RECIPIENT_DEVICE|LIBUSB_ENDPOINT_OUT,
-				0x02, 0x0001, 0x0000, "", 0, 0);
+				0x02, 0x0001, 0x0000, NULL, 0, 0);
 
+	return r;
 }
 
 int corsairlink_asetek_start_transaction(struct corsair_device_info *dev)
@@ -77,10 +78,11 @@ int corsairlink_asetek_start_transaction(struct corsair_device_info *dev)
 
 	r = libusb_control_transfer(dev->handle,
 				LIBUSB_REQUEST_TYPE_VENDOR|LIBUSB_RECIPIENT_DEVICE|LIBUSB_ENDPOINT_IN,
-				255, 0x370B, 0x0000, "", 1, 0);
+				255, 0x370B, 0x0000, NULL, 1, 0);
 
 	r = libusb_control_transfer(dev->handle,
 				LIBUSB_REQUEST_TYPE_VENDOR|LIBUSB_RECIPIENT_DEVICE|LIBUSB_ENDPOINT_OUT,
-				0x00, 0x0000, 0x0000, "", 0, 0);
+				0x00, 0x0000, 0x0000, NULL, 0, 0);
 
+	return r;
 }

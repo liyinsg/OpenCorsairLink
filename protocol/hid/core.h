@@ -19,7 +19,7 @@
 #ifndef _CORSAIRLINKPROTO_H
 #define _CORSAIRLINKPROTO_H
 
-enum CorsairLinkCommands {
+enum HID_Commands {
 	DeviceID = 0x00, 
 	FirmwareID = 0x01,
 	ProductName = 0x02,
@@ -49,7 +49,7 @@ enum CorsairLinkCommands {
 	FAN_TempTable = 0x1A
 };
 
-enum _CorsairLinkOpCodes{
+enum HID_Op_Codes{
 	WriteOneByte = 0x06,
 	ReadOneByte = 0x07,
 	WriteTwoBytes = 0x08,
@@ -58,14 +58,14 @@ enum _CorsairLinkOpCodes{
 	ReadThreeBytes = 0x0B,
 };
 
-enum CorsairLedModes {
+enum HID_Led_Modes {
 	StaticColor = 0x00,
 	TwoColorCycle = 0x40,
 	FourColorCycle = 0x80,
 	TemperatureColor = 0xC0
 };
 
-enum CorsairFanModes {
+enum HID_Fan_Modes {
 	FixedPWM = 0x02,
 	FixedRPM = 0x04,
 	Default = 0x06,
@@ -79,5 +79,7 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
 			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
 			unsigned char Warning_Temp, unsigned char Warning_Enable);
+
+extern unsigned char CommandId;
 
 #endif

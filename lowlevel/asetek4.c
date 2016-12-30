@@ -14,8 +14,10 @@ int corsairlink_asetek_init(struct libusb_device_handle *dev_handle,
 			unsigned char endpoint)
 {
 	int r;
-	r = libusb_control_transfer(dev_handle, 0x40, 0x00, 0xffff, 0x0000, "", 0, 0);
-	r = libusb_control_transfer(dev_handle, 0x40, 0x02, 0x0002, 0x0000, "", 0, 0);
+
+	r = libusb_control_transfer(dev_handle, 0x40, 0x00, 0xffff, 0x0000, NULL, 0, 0);
+	r = libusb_control_transfer(dev_handle, 0x40, 0x02, 0x0002, 0x0000, NULL, 0, 0);
+
 	return r;
 }
 
@@ -23,7 +25,9 @@ int corsairlink_asetek_deinit(struct libusb_device_handle *dev_handle,
 			unsigned char endpoint)
 {
 	int r;
-	r = libusb_control_transfer(dev_handle, 0x40, 0x02, 0x0004, 0x0000, "", 0, 200);
+
+	r = libusb_control_transfer(dev_handle, 0x40, 0x02, 0x0004, 0x0000, NULL, 0, 200);
+
 	return r;
 }
 
@@ -35,12 +39,8 @@ int corsairlink_asetek_write(struct libusb_device_handle *dev_handle,
 	int bytes_transferred;
 	int r;
 	
-	r = libusb_bulk_transfer(dev_handle, 0x02, data, length, &bytes_transferred, TIMEOUT_DEFAULT);
-	//if (r == 0 && bytes_transferred == length) {
-	//	fprintf(stdout, "Writing Successful!\n");
-	//} else {
-	//	fprintf(stdout, "Write Error\n");
-	//}
+	r = libusb_bulk_transfer(dev_handle, endpoint, data, length, &bytes_transferred, TIMEOUT_DEFAULT);
+
 	return r;
 }
 
@@ -52,11 +52,7 @@ int corsairlink_asetek_read(struct libusb_device_handle *dev_handle,
 	int bytes_transferred;
 	int r;
 	
-	r = libusb_bulk_transfer(dev_handle, 0x82, data, length, &bytes_transferred, TIMEOUT_DEFAULT);
-	//if (r == 0 && bytes_transferred > 1) {
-	//	fprintf(stdout, "Reading Successful!\n");
-	//} else {
-	//	fprintf(stdout, "Read Error\n");
-	//}
+	r = libusb_bulk_transfer(dev_handle, endpoint, data, length, &bytes_transferred, TIMEOUT_DEFAULT);
+
 	return r;
 }

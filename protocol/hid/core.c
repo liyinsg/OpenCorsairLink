@@ -16,12 +16,17 @@
  * along with OpenCorsairLink.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
+#include <libusb.h>
 
-#include "core.h"
+#include "../../lowlevel/hid.h"
+#include "../../device.h"
+
+unsigned char CommandId = 0x81;
 
 // int GetDeviceId(void)
 // {

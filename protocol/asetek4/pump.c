@@ -6,6 +6,7 @@
 #include <libusb.h>
 #include "../../lowlevel/asetek4.h"
 #include "../../device.h"
+#include "core.h"
 
 int corsairlink_asetek_pump_mode_performance(struct corsair_device_info *dev)
 {
@@ -14,8 +15,8 @@ int corsairlink_asetek_pump_mode_performance(struct corsair_device_info *dev)
 	unsigned char commands[32] ;
 	memset(response, 0, sizeof(response));
 	memset(commands, 0, sizeof(commands));
-	commands[0] = 0x13;
-	commands[1] = 0x42;
+	commands[0] = PumpMode;
+	commands[1] = Performance;
 
 	r = dev->write(dev->handle, dev->write_endpoint, commands, 2);
 	r = dev->read(dev->handle, dev->read_endpoint, response, 32);
@@ -30,8 +31,8 @@ int corsairlink_asetek_pump_mode_quiet(struct corsair_device_info *dev)
 	unsigned char commands[32] ;
 	memset(response, 0, sizeof(response));
 	memset(commands, 0, sizeof(commands));
-	commands[0] = 0x13;
-	commands[1] = 0x28;
+	commands[0] = PumpMode;
+	commands[1] = Quiet;
 
 	r = dev->write(dev->handle, dev->write_endpoint, commands, 2);
 	r = dev->read(dev->handle, dev->read_endpoint, response, 32);

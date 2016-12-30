@@ -6,6 +6,7 @@
 #include <libusb.h>
 #include "../../lowlevel/asetek4.h"
 #include "../../device.h"
+#include "core.h"
 
 int corsairlink_asetek_fan_curve(struct corsair_device_info *dev,
 			unsigned char temp1, unsigned char temp2, unsigned char temp3,
@@ -19,8 +20,8 @@ int corsairlink_asetek_fan_curve(struct corsair_device_info *dev,
 	memset(response, 0, sizeof(response));
 	memset(commands, 0, sizeof(commands));
 
-	commands[0] = 0x11;
-	commands[1] = 0x00;
+	commands[0] = FanCurve;
+	commands[1] = UnknownFanCurve;
 	
 	commands[2] = temp1;
 	commands[3] = temp2;

@@ -27,6 +27,8 @@
 #include "../../device.h"
 #include "core.h"
 
+static unsigned char CommandId = 0x81;
+
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
 			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
 			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
@@ -38,13 +40,13 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 	memset(response, 0, sizeof(response));
 	memset(commands, 0, sizeof(commands));
 
-	unsigned int CommandId = 0x81;
 	unsigned char i = 1;
 
+	i = 1;
 	commands[i++] = CommandId++; // Command ID
 	commands[i++] = WriteOneByte; // Command Opcode
 	commands[i++] = LED_SelectCurrent; // Command data...
-	commands[i++] = 1;
+	commands[i++] = 0;
 
 	commands[i++] = CommandId++; // Command ID
 	commands[i++] = WriteOneByte; // Command Opcode
@@ -55,26 +57,18 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 	commands[i++] = WriteThreeBytes; // Command Opcode
 	commands[i++] = LED_CycleColors; // Command data...
 	commands[i++] = 0x0C;
-
 	commands[i++] = Led_Red;
 	commands[i++] = Led_Green;
 	commands[i++] = Led_Blue;
-
 	commands[i++] = Led_Red;
 	commands[i++] = Led_Green;
 	commands[i++] = Led_Blue;
-
 	commands[i++] = Led_Red;
 	commands[i++] = Led_Green;
 	commands[i++] = Led_Blue;
-
-	commands[i++] = Led_Red;
-	commands[i++] = Led_Green;
-	commands[i++] = Led_Blue;
-
 	commands[0] = i; // Length
 
-	r = dev->write(dev->handle, dev->write_endpoint, commands, 64);
+	r = dev->write(dev->handle, dev->write_endpoint, commands, i);
 	r = dev->read(dev->handle, dev->read_endpoint, response, 64);
 
 	// fan_rpm = (long int) response[0]*16*16 + response[1];

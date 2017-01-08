@@ -1,7 +1,9 @@
 #include <libusb.h>
+#include "device.h"
 #include "lowlevel/asetek4.h"
 #include "lowlevel/hid.h"
-#include "device.h"
+#include "protocol/asetek4/core.h"
+#include "protocol/hid/core.h"
 
 struct corsair_device_info corsairlink_devices[] = {
 	{
@@ -17,6 +19,7 @@ struct corsair_device_info corsairlink_devices[] = {
 		.deinit = corsairlink_hid_deinit,
 		.read = corsairlink_hid_read,
 		.write = corsairlink_hid_write,
+		.led = corsairlink_hid_change_led,
 	},
 	{
 		.vendor_id = 0x1b1c,
@@ -31,6 +34,7 @@ struct corsair_device_info corsairlink_devices[] = {
 		.deinit = corsairlink_asetek_deinit,
 		.read = corsairlink_asetek_read,
 		.write = corsairlink_asetek_write,
+		.led = corsairlink_asetek_change_led,
 	}
 };
 

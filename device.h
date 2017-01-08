@@ -1,6 +1,8 @@
 #ifndef __DEVICE_H
 #define __DEVICE_H
 
+#include "common.h"
+
 struct corsair_device_info {
 	/** device info */
 	char name[16];
@@ -22,6 +24,8 @@ struct corsair_device_info {
 	int (*deinit)(struct libusb_device_handle*, unsigned char);
 	int (*read)(struct libusb_device_handle*, unsigned char, unsigned char*, int);
 	int (*write)(struct libusb_device_handle*, unsigned char, unsigned char*, int);
+	int (*led)(struct corsair_device_info *dev, struct color *l, struct color *w, unsigned char t, unsigned char e);
+
 };
 #endif
 

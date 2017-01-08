@@ -19,6 +19,8 @@
 #ifndef _CORSAIRLINKPROTO_H
 #define _CORSAIRLINKPROTO_H
 
+#include "../../common.h"
+
 enum HID_Commands {
 	DeviceID = 0x00, 
 	FirmwareID = 0x01,
@@ -66,18 +68,17 @@ enum HID_Led_Modes {
 };
 
 enum HID_Fan_Modes {
-	FixedPWM = 0x02,
-	FixedRPM = 0x04,
-	Default = 0x06,
-	Quiet = 0x08,
-	Balanced = 0x0A,
-	Performance = 0x0C,
-	Custom = 0x0E
+	HID_FixedPWM = 0x02,
+	HID_FixedRPM = 0x04,
+	HID_Default = 0x06,
+	HID_Quiet = 0x08,
+	HID_Balanced = 0x0A,
+	HID_Performance = 0x0C,
+	HID_Custom = 0x0E
 };
 
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
-			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
-			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
+			struct color *color_led, struct color *warning_led,
 			unsigned char Warning_Temp, unsigned char Warning_Enable);
 
 extern unsigned char CommandId;

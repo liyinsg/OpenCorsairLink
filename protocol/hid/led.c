@@ -28,8 +28,7 @@
 #include "core.h"
 
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
-			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
-			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
+			struct color *color_led, struct color *warning_led,
 			unsigned char Warning_Temp, unsigned char Warning_Enable)
 {
 	int r;
@@ -56,21 +55,21 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 	commands[i++] = LED_CycleColors; // Command data...
 	commands[i++] = 0x0C;
 
-	commands[i++] = Led_Red;
-	commands[i++] = Led_Green;
-	commands[i++] = Led_Blue;
+	commands[i++] = color_led->red;
+	commands[i++] = color_led->green;
+	commands[i++] = color_led->blue;
 
-	commands[i++] = Led_Red;
-	commands[i++] = Led_Green;
-	commands[i++] = Led_Blue;
+	commands[i++] = color_led->red;
+	commands[i++] = color_led->green;
+	commands[i++] = color_led->blue;
 
-	commands[i++] = Led_Red;
-	commands[i++] = Led_Green;
-	commands[i++] = Led_Blue;
+	commands[i++] = color_led->red;
+	commands[i++] = color_led->green;
+	commands[i++] = color_led->blue;
 
-	commands[i++] = Led_Red;
-	commands[i++] = Led_Green;
-	commands[i++] = Led_Blue;
+	commands[i++] = color_led->red;
+	commands[i++] = color_led->green;
+	commands[i++] = color_led->blue;
 
 	commands[0] = i; // Length
 

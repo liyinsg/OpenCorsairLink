@@ -2,6 +2,9 @@
 #ifndef _PROTOCOL_ASETEK_H
 #define _PROTOCOL_ASETEK_H
 
+#include <stdint.h>
+#include "../../common.h"
+
 // // seems to be 18 bytes - const
 // //					{0x10,0xrr,0xgg,0xbb,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??,0x??};
 // #define v4_silent_status_control 	{0x10,0x00,0x00,0x32,0x00,0xff,0xff,0xff,0x00,0x00,0x24,0x0a,0x05,0x01,0x00,0x00,0x01,0x00};
@@ -25,13 +28,12 @@ enum Asetek_FanCurve {
 };
 
 enum Asetek_PumpModes {
-	Quiet = 0x28,
-	Performance = 0x42,
+	Asetek_Quiet = 0x28,
+	Asetek_Performance = 0x42,
 };
 
 int corsairlink_asetek_change_led(struct corsair_device_info *dev,
-			unsigned char Led_Red, unsigned char Led_Green, unsigned char Led_Blue,
-			unsigned char Warning_Red, unsigned char Warning_Green, unsigned char Warning_Blue,
+			struct color *color_led, struct color *warning_led,
 			unsigned char Warning_Temp, unsigned char Warning_Enable);
 int corsairlink_asetek_22000000(struct corsair_device_info *dev);
 int corsairlink_asetek_14000000(struct corsair_device_info *dev);

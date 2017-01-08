@@ -47,12 +47,19 @@ static struct option long_options[] = {
 
 void options_print(void);
 
+#define INIT_WARNING_LED(x) \
+	x->red = 0xFF; \
+	x->green = 0x00; \
+	x->blue = 0x00;
+
 int options_parse(int argc, char **argv, struct option_flags *flags, 
 	struct color *led, struct color *warning, int8_t *warning_temp,
 	struct fan_table *fan, struct fan_table *pump, uint8_t *pump_mode)
 {
 	int c, returnCode = 0;
 
+	INIT_WARNING_LED(warning);
+	*warning_temp = 60;
 	// INIT_OPTIONS(&ropt);
 	// INIT_FAN_TABLE(ropt.fan);
 	// INIT_FAN_TABLE(ropt.pump);

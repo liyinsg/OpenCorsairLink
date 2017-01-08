@@ -26,22 +26,28 @@ struct color {
 };
 
 struct fan_table {
-	int8_t s1;
-	int8_t s2;
-	int8_t s3;
-	int8_t s4;
-	int8_t s5;
+	/** temperatures */
 	int8_t t1;
 	int8_t t2;
 	int8_t t3;
 	int8_t t4;
 	int8_t t5;
+	int8_t t6;
+
+	/** fan speeds */
+	int8_t s1;
+	int8_t s2;
+	int8_t s3;
+	int8_t s4;
+	int8_t s5;
+	int8_t s6;
 };
 
 struct option_flags {
 	// flags
 	uint8_t device_firmware:1;
 	uint8_t read_temperature:1;
+	uint8_t read_fan_speed:1;
 };
 
 struct option_parse_return {

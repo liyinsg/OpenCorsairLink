@@ -29,15 +29,15 @@
 
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
 			struct color *color_led, struct color *warning_led,
-			unsigned char Warning_Temp, unsigned char Warning_Enable)
+			uint8_t Warning_Temp, uint8_t Warning_Enable)
 {
 	int r;
-	unsigned char response[64];
-	unsigned char commands[32] ;
+	uint8_t response[64];
+	uint8_t commands[32] ;
 	memset(response, 0, sizeof(response));
 	memset(commands, 0, sizeof(commands));
 
-	unsigned char i = 1;
+	uint8_t i = 1;
 
 	i = 1;
 	commands[i++] = CommandId++; // Command ID
@@ -73,8 +73,8 @@ int corsairlink_hid_change_led(struct corsair_device_info *dev,
 
 	commands[0] = i; // Length
 
-	r = dev->write(dev->handle, dev->write_endpoint, commands, i);
-	r = dev->read(dev->handle, dev->read_endpoint, response, 64);
+	r = dev->driver->write(dev->handle, dev->write_endpoint, commands, i);
+	r = dev->driver->read(dev->handle, dev->read_endpoint, response, 64);
 
 	// fan_rpm = (long int) response[0]*16*16 + response[1];
 	// pump_rpm = (response[8]*16*16)+response[9];

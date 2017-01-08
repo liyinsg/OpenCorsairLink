@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 	struct color warning_led;
 	struct fan_table fan1;
 	struct fan_table pump;
-	int8_t warning_led_temp = -1;
+	int8_t warning_led_temp;
 	uint8_t pump_mode;
 	
 	options_parse(argc, argv, &flags,
@@ -68,13 +68,13 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	r = dev->init(dev->handle, dev->write_endpoint);
+	r = dev->driver->init(dev->handle, dev->write_endpoint);
 
 	// r = corsairlink_asetek_fan_curve(dev, 20, 25, 29, 33, 37, 40, 30, 40, 50, 60, 70, 80);
-	r = dev->led(dev, &led_color, &warning_led, warning_led_temp, (warning_led_temp > -1));
+	r = dev->driver->led(dev, &led_color, &warning_led, warning_led_temp, (warning_led_temp > -1));
 	//r = corsairlink_hid_change_led(dev, 0xff, 0xff, 0x00, 0xff, 0x00, 0x00, 60, 1);
 
-	r = dev->deinit(dev->handle, dev->write_endpoint);
+	r = dev->driver->deinit(dev->handle, dev->write_endpoint);
 
 exit:
 	corsairlink_close(dev);

@@ -16,8 +16,8 @@
  * along with OpenCorsairLink.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CORSAIRLINKPROTO_H
-#define _CORSAIRLINKPROTO_H
+#ifndef _PROTOCOL_HID_H
+#define _PROTOCOL_HID_H
 
 #include "../../common.h"
 
@@ -77,10 +77,12 @@ enum HID_Fan_Modes {
 	HID_Custom = 0x0E
 };
 
+int corsairlink_hid_device_id(struct corsair_device_info *dev);
+int corsairlink_hid_firmware_id(struct corsair_device_info *dev);
 int corsairlink_hid_change_led(struct corsair_device_info *dev,
 			struct color *color_led, struct color *warning_led,
-			unsigned char Warning_Temp, unsigned char Warning_Enable);
+			uint8_t Warning_Temp, uint8_t Warning_Enable);
 
-extern unsigned char CommandId;
+static uint8_t CommandId = 0x81;
 
 #endif

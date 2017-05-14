@@ -61,11 +61,16 @@ int options_parse(int argc, char **argv,
 	struct option_parse_return *settings)
 {
 	int cc, returnCode = 0;
+	const struct fan_table quiet_fan_table = {
+		.t1 = 40, .t2 = 45, .t3 = 50, .t4 = 60, .t5 = 70, .t6 = 85,
+		.s1 = 25, .s2 = 27, .s3 = 30, .s4 = 50, .s5 = 75, .s6 = 100,
+	};
 
 	memset(settings, 0, sizeof(struct option_parse_return));
 	INIT_WARNING_LED(settings->warning_led);
 	settings->warning_led_temp = 60;
-	settings->pump_mode = DEFAULT;
+	memcpy(&settings->fan1, &quiet_fan_table, sizeof(struct fan_table));
+	settings->pump_mode = QUIET;
 
 	while (1) {
 		int option_index = 0;

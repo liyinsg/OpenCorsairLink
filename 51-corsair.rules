@@ -1,0 +1,1 @@
+ACTION=="add", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0c08", RUN+="/usr/local/bin/OpenCorsairLink.elf --device=0 --led 32cd32"
